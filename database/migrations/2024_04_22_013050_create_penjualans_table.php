@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_penjualan');
-            $table->string('total_harga');
+            $table->string('total_harga'); // decimal
             $table->unsignedBigInteger('pelanggan_id');
             $table->foreign('pelanggan_id')->references('id')->on('pelanggans');
         });

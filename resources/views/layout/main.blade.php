@@ -18,7 +18,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css')}}">
     <style>
         .body-struk {
             font-family: Arial, sans-serif;
@@ -71,7 +71,7 @@
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            @if (Auth::user()->role == 'admin')
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -84,28 +84,69 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('admin-dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{route('user')}}">
+                <a class="nav-link" href="{{ route('user') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>User</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{route('produk')}}">
+                <a class="nav-link" href="{{ route('produk-admin') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Produk</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{route('penjualan')}}">
+                <a class="nav-link" href="{{ route('penjualan') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Penjualan</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logout') }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Logout</span></a>
+            </li>
+
+            @else
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                </div>
+                <div class="sidebar-brand-text mx-3">Admin Kasir</div>
+            </a>
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('admin-dashboard') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('produk-admin') }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Produk</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('penjualan') }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Penjualan</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logout') }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Logout</span></a>
+            </li>
+            @endif
 
         </ul>
         <!-- End of Sidebar -->
@@ -139,8 +180,8 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                <a class="dropdown-item" href="{{ route('logout') }}">
+                                    <i href="{{ route('logout') }}" class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>

@@ -1,13 +1,15 @@
 @extends('layout.main')
 
 @section('content')
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h4 mb-0 text-gray-900">Tambah User</h1>
     </div>
 
     <div class="container-fluid">
-        <form action="" method="POST">
+    <form action="{{ route('user-store') }}" method="POST">
+        @csrf
             <div class="mb-3">
               <label for="name" class="form-label">Nama</label>
               <input type="text" name="name" class="form-control" id="name">
@@ -21,13 +23,14 @@
               <input type="password" name="password" class="form-control" id="password">
             </div>
             <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select class="form-select" name="role" id="role">
-                <option selected>Pilih Role</option>
-                <option name="role" value="role">Admin</option>
-                <option name="role" value="role">Petugas</option>
-              </select>
-            </div>
+            <div class="mb-3">
+          <label for="role" class="form-label">Role</label>
+          <select class="form-select" name="role" id="role" required>
+              <option selected disabled>Pilih Role</option>
+              <option value="admin">Admin</option>
+              <option value="petugas">Petugas</option>
+            </select>
+          </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
     </div>

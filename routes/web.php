@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PenjualanController;
+
 
 
 
@@ -18,28 +21,51 @@ use App\Http\Controllers\PenjualanController;
 |
 */
 
-Route::get('/',[AuthController::class, 'login'])->name('login');
-Route::post('/',[AuthController::class, 'loginStore'])->name('login-store');
-Route::get('/admin-dashboard',[AuthController::class, 'admin'])->name('admin-dashboard');
-Route::get('/petugas-dashboard',[AuthController::class, 'petugas'])->name('petugas-dashboard');
+Route::get('/', [AuthController::class, 'log'])->name('/');
+Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::group(['middleware' => 'role:admin'], function () {
+    Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
+    Route::get('/user', [AdminController::class, 'user'])->name('user');
+    Route::get('/user/create', [AdminController::class, 'userCreate'])->name('user-create');
+    Route::post('/user/create', [AdminController::class, 'Userstore'])->name('user-store');
+    Route::get('/user/edit/{id}', [AdminController::class, 'userEdit'])->name('user-edit');
+    Route::post('/user/update/{id}', [AdminController::class, 'userUpdate'])->name('user-update');
+    Route::get('/user/delete/{id}', [AdminController::class, 'userDelete'])->name('user-delete');
+});
+    Route::get('/produk-admin', [ProdukController::class, 'produk'])->name('produk-admin');
+    Route::get('/produk/create', [ProdukController::class, 'produkCreate'])->name('produk-create');
+    Route::post('/produk/create', [ProdukController::class, 'produkStore'])->name('produk-store');
+    Route::get('/produk-edit/{id}', [ProdukController::class, 'produkEdit'])->name('produk-edit');
+    Route::post('/produk-edit/{id}', [ProdukController::class,'produkUpdate'])->name('produk-update');
+    Route::get('/produk/restok/{id}', [ProdukController::class, 'restokCreate'])->name('stok-create');
+    Route::post('/produk/restok/{id}', [ProdukController::class, 'restokUpdate'])->name('stok-update');
+    Route::get('/produk-delete/{id}', [ProdukController::class, 'delete'])->name('produk-delete');
+
+    Route::get('/penjualan', [PenjualanController::class, 'penjualan'])->name('penjualan');
+    Route::get('penjualan/tambah', [PenjualanController::class, 'tambahpenjualan'])->name('penjualan.tambah');
+    Route::post('penjualan/tambah', [PenjualanController::class, 'simpanPenjualan'])->name('penjualan.tambah.simpan');
+    Route::get('penjualan/detail/{id}', [PenjualanController::class, 'detailPenjualan'])->name('penjualan.detail');
+    Route::delete('/penjualan-delete/{id}', [PenjualanController::class, 'deleteDetailPenjualan'])->name('detail-penjualan-delete');
+
+    Route::get('/penjualan/export/excel', [PenjualanController::class, 'exportToExcel'])->name('penjualan.export.excel');
+// Route::get('produk/update/{id}', [AdminController::class,'produkStokEdit'])->name('produk.edit');
+// Route::put('produk/update/{id}', [AdminController::class,'produkStokUpdate']);
 
 
-Route::get('/produk',[ProdukController::class, 'produk'])->name('produk');
-Route::get('/produk-create',[ProdukController::class, 'produkCreate'])->name('produk-create');
-Route::get('/produk-edit',[ProdukController::class, 'produkEdit'])->name('produk-edit');
-Route::get('/produk-stok',[ProdukController::class, 'produkStok'])->name('produk-stok');
-
-Route::get('/user',[AuthController::class, 'user'])->name('user');
-Route::get('/user-create',[AuthController::class, 'userCreate'])->name('user-create');
-Route::get('/user-edit',[AuthController::class, 'userEdit'])->name('user-edit');
-
-Route::get('/penjualan',[PenjualanController::class, 'penjualan'])->name('penjualan');
-Route::get('/penjualan-create',[PenjualanController::class, 'penjualanCreate'])->name('penjualan-create');
-Route::get('/penjualan-show',[PenjualanController::class, 'penjualanShow'])->name('penjualan-show');
+Route::get('/search', [AdminController::class, 'search'])->name('search-user');
+Route::get('/search', [ProdukController::class, 'search'])->name('search-produk');
 
 
 
 
 
+Route::group(['middleware' => 'role:petugas'], function () {
+    Route::get('/petugas-dashboard', [PetugasController::class, 'index'])->name('petugas-dashboard');
+    Route::get('/produk-petugas', [PetugasController::class, 'produk'])->name('produk-petugas');
 
+    Route::get('/penjualan-petugas', [PetugasController::class, 'penjualan'])->name('penjualan-petugas');
+    Route::get('penjualan/detail/{id}', [PenjualanController::class, 'detailPenjualan'])->name('penjualan.detail');
 
+});

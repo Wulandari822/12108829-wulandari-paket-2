@@ -9,11 +9,15 @@ class Pelanggan extends Model
 {
     use HasFactory;
 
-    protected $table = ['pelanggans'];
+    protected $table = 'pelanggans';
+    protected $fillable = [
+        'nama_pelanggan',
+        'alamat',
+        'nomor_telepon'
+    ];
 
-    protected $fillable = ['nama_pelanggan', 'alamat', 'nomor_telepon'];
-
-    public function penjualan(){
+    public function penjualan()
+    {
         return $this->hasOne(Penjualan::class);
     }
 }

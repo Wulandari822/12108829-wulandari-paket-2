@@ -29,16 +29,16 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-4">
-                <form action="{{ route('login-store') }}" method="POST" >
+                <form action="{{ route('authenticate') }}" method="POST" >
                     @csrf
                     <h4 class="text-center">Login</h4>
                     <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email">
+                    <input type="email" name="email" class="form-control" id="email">
                     </div>
                     <div class="mb-3">
                     <label for="pasword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="pasword">
+                    <input type="password" name="password" class="form-control" id="pasword">
                     </div>
                     <button type="submit" class="btn">Login</button>
                 </form>

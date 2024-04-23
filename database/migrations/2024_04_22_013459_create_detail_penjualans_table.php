@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('penjualan_id');
             $table->foreign('penjualan_id')->references('id')->on('penjualans');
             $table->integer('jumlah_produk');
-            $table->string('sub_total')->nullable();
+            $table->string('sub_total')->nullable(); //decimal
             $table->timestamps();
         });
     }
